@@ -103,7 +103,7 @@ class SelfAttention(Module):
         # Build the causal mask, masking upper triangular part of attention scores
         self.register_buffer("causal_mask", torch.triu(torch.ones(seq_len, seq_len), diagonal=1).bool())
 
-    def forward(self, x: Tensor, return_scores: bool = False) -> Tensor | Tuple[Tensor, Tensor]:
+    def forward(self, x: Tensor, return_scores: bool = False) -> Tensor:
         # projects input to Q, K, V spaces
         q = self.proj_q(x)  # (bs, seq_len, dim_k)
         k = self.proj_k(x)  # (bs, seq_len, dim_k)
@@ -151,7 +151,7 @@ class MultiHeadAttention(Module):
         # Build the causal mask, masking upper triangular part of attention scores
         self.register_buffer("causal_mask", torch.triu(torch.ones(seq_len, seq_len), diagonal=1).bool())
 
-    def forward(self, x: Tensor, return_scores: bool = False) -> Tensor | Tuple[Tensor, Tensor]:
+    def forward(self, x: Tensor, return_scores: bool = False) -> Tensor:
         # projects input to Q, K, V spaces
         qkv = self.proj_qkv(x)  # (bs, seq_len, 3 * dim_emb)
 
